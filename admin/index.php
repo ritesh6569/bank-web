@@ -29,12 +29,16 @@ $totalNotices = 0;
 $totalDownloads = 0;
 $totalGalleryItems = 0;
 $activeNotices = 0;
+$totalContacts = 0;
+$newContacts = 0;
 
 try {
     $totalNotices = fetchOne("SELECT COUNT(*) as count FROM notices")['count'] ?? 0;
     $totalDownloads = fetchOne("SELECT COUNT(*) as count FROM downloads")['count'] ?? 0;
     $totalGalleryItems = fetchOne("SELECT COUNT(*) as count FROM gallery")['count'] ?? 0;
     $activeNotices = fetchOne("SELECT COUNT(*) as count FROM notices WHERE status = 'active'")['count'] ?? 0;
+    $totalContacts = fetchOne("SELECT COUNT(*) as count FROM contact_submissions")['count'] ?? 0;
+    $newContacts = fetchOne("SELECT COUNT(*) as count FROM contact_submissions WHERE status = 'new'")['count'] ?? 0;
 } catch (Exception $e) {
     // Database might not be set up yet
 }
@@ -68,13 +72,18 @@ try {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="notices.php" style="padding: 1rem 1.5rem;">
-                        <i class="fas fa-bullhorn me-2"></i> Manage Notices
+                    <a class="nav-link text-white" href="contacts.php" style="padding: 1rem 1.5rem;">
+                        <i class="fas fa-envelope me-2"></i> Contact Submissions
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="downloads.php" style="padding: 1rem 1.5rem;">
                         <i class="fas fa-download me-2"></i> Manage Downloads
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="notices.php" style="padding: 1rem 1.5rem;">
+                        <i class="fas fa-bullhorn me-2"></i> Manage Notices
                     </a>
                 </li>
                 <li class="nav-item">
@@ -143,6 +152,16 @@ try {
                                 <h6 class="text-muted mb-2"><i class="fas fa-images"></i> Gallery Items</h6>
                                 <h3 class="mb-0"><?php echo $totalGalleryItems; ?></h3>
                                 <small class="text-warning"><i class="fas fa-images"></i> Image Gallery</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #8b5cf6; animation-delay: 0.25s;">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-2"><i class="fas fa-envelope"></i> Contact Submissions</h6>
+                                <h3 class="mb-0"><?php echo $totalContacts; ?></h3>
+                                <small class="text-danger"><i class="fas fa-bell"></i> <?php echo $newContacts; ?> New</small>
                             </div>
                         </div>
                     </div>

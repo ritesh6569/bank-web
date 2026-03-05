@@ -247,7 +247,6 @@ const handleSearch = debounce(function(query) {
         return;
     }
     
-    console.log('Searching for:', query);
     // Implement search logic here
 }, 300);
 

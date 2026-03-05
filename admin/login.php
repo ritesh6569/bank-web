@@ -52,11 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query = "SELECT id, username, password, email, full_name FROM admin_users WHERE username = ?";
             $result = fetchOne($query, [$username]);
             
-            // Debug info
-            error_log("Login Debug - Username: $username, Query Result: " . json_encode($result));
-            // Debug info
-            error_log("Login Debug - Username: $username, Query Result: " . json_encode($result));
-            
             if (!empty($result) && password_verify($password, $result['password'])) {
                 // Password is correct - set session variables
                 $_SESSION['admin_id'] = $result['id'];
@@ -65,11 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_email'] = $result['email'];
                 $_SESSION['admin_name'] = $result['full_name'];
                 $_SESSION['login_time'] = time();
-                
-                // Store success message for testing
-                $_SESSION['login_success'] = "Login successful for user: " . $result['username'];
-                
-                error_log("Login Debug - Login successful for: $username");
 
                 // IMPORTANT: Use absolute path from SITE_URL to admin/index.php
                 // This ensures we go to the admin dashboard, not the landing page
@@ -77,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: " . $dashboard_url);
                 exit();
             } else {
-                error_log("Login Debug - Invalid credentials for: $username, Password verify: " . ((!empty($result) && password_verify($password, $result['password'])) ? 'true' : 'false'));
                 $error = 'Invalid username or password.';
             }
         } catch (Exception $e) {
@@ -240,23 +229,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="login-body">
-            <!-- Test Alert - Always Show for Debugging -->
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i class="fas fa-bug me-2"></i>
-                <strong>Debug Mode:</strong> This page is in debug/testing mode. Check browser console for logs.
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-
             <?php if ($show_alert): ?>
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                     <i class="fas fa-info-circle me-2"></i>
-                    <strong>Test Alert:</strong> <?php echo htmlspecialchars($alert_message); ?>
+                    <strong>Info:</strong> <?php echo htmlspecialchars($alert_message); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-                <script>
-                    // Display test alert for debugging
-                    console.log('Test Alert: <?php echo addslashes($alert_message); ?>');
-                </script>
             <?php endif; ?>
 
             <?php if (!empty($error)): ?>
@@ -330,25 +308,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    
-    <!-- Debug Script -->
-    <script>
-        console.log('🔍 Login Page Debug Info:');
-        console.log('- Page loaded successfully');
-        console.log('- Current URL:', window.location.href);
-        console.log('- Form method: POST');
-        console.log('- Demo credentials: username=admin, password=password');
-        
-        // Test form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            console.log('📤 Form submitted with:', {
-                username: username,
-                password: '***' + password.slice(-1),
-                timestamp: new Date().toISOString()
-            });
-        });
-    </script>
 </body>
 </html>

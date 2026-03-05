@@ -6,6 +6,7 @@
 
 require_once 'config.php';
 require_once 'includes/helpers.php';
+require_once 'includes/db.php';
 
 $page_title = 'Contact Us - ' . SITE_NAME;
 $meta_description = 'Get in touch with ' . SITE_NAME . '. Find branches, phone numbers, and contact information';
@@ -16,24 +17,107 @@ $form_message_type = '';
 
 // Handle contact form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
-    $name = sanitize($_POST['name'] ?? '');
-    $email = sanitize($_POST['email'] ?? '');
-    $phone = sanitize($_POST['phone'] ?? '');
-    $subject = sanitize($_POST['subject'] ?? '');
-    $message = sanitize($_POST['message'] ?? '');
+    // Log all POST data received
+    $log_dir = __DIR__ . '/logs';
+    if (!is_dir($log_dir)) {
+        mkdir($log_dir, 0755, true);
+    }
+    
+    // Get raw POST values first
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $subject = trim($_POST['subject'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+    
+    // Log submission attempt
+    $log_entry = [
+        'timestamp' => date('Y-m-d H:i:s'),
+        'post_data' => $_POST,
+        'parsed_data' => [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'subject' => $subject,
+            'message' => $message
+        ]
+    ];
+    error_log('Contact form submission received: ' . json_encode($log_entry));
 
-    if (empty($name) || empty($email) || empty($message)) {
+    if (empty($name) || empty($email) || empty($message) || empty($subject)) {
         $form_message = 'Please fill in all required fields.';
         $form_message_type = 'danger';
+        error_log('Contact form validation failed: Missing required fields');
     } elseif (!isValidEmail($email)) {
         $form_message = 'Please enter a valid email address.';
         $form_message_type = 'danger';
+        error_log('Contact form validation failed: Invalid email - ' . $email);
     } else {
-        // In a real scenario, send email here
-        // For now, just show success message
-        $form_submitted = true;
-        $form_message = 'Thank you for your inquiry! We will contact you soon.';
-        $form_message_type = 'success';
+        try {
+            // Get database connection
+            $pdo = getDBConnection();
+            
+            // Check if table exists first
+            $table_check = $pdo->query("SHOW TABLES LIKE 'contact_submissions'");
+            
+            if ($table_check->rowCount() === 0) {
+                // Table doesn't exist, try to create it
+                error_log('contact_submissions table does not exist, creating...');
+                $create_table_sql = "
+                CREATE TABLE IF NOT EXISTS contact_submissions (
+                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    phone VARCHAR(20),
+                    subject VARCHAR(255) NOT NULL,
+                    message LONGTEXT NOT NULL,
+                    status ENUM('new', 'replied', 'archived') DEFAULT 'new',
+                    admin_reply LONGTEXT,
+                    admin_reply_by INT,
+                    admin_reply_at DATETIME,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    FOREIGN KEY (admin_reply_by) REFERENCES admin_users(id) ON DELETE SET NULL,
+                    KEY idx_email (email),
+                    KEY idx_status (status),
+                    KEY idx_created_at (created_at)
+                )
+                ";
+                $pdo->exec($create_table_sql);
+                error_log('contact_submissions table created successfully');
+            }
+            
+            // Save contact submission to database using prepared statement
+            $query = "INSERT INTO contact_submissions (name, email, phone, subject, message, status) 
+                     VALUES (?, ?, ?, ?, ?, 'new')";
+            
+            error_log('Attempting to insert: name=' . $name . ', email=' . $email . ', subject=' . $subject);
+            
+            $stmt = $pdo->prepare($query);
+            $result = $stmt->execute([
+                $name,
+                $email,
+                $phone,
+                $subject,
+                $message
+            ]);
+            
+            if ($result) {
+                $insert_id = $pdo->lastInsertId();
+                error_log('Contact submission inserted successfully with ID: ' . $insert_id);
+                $form_submitted = true;
+                $form_message = 'Thank you for your inquiry! We will contact you soon.';
+                $form_message_type = 'success';
+            } else {
+                error_log('Contact submission insert failed: ' . json_encode($stmt->errorInfo()));
+                $form_message = 'There was an error processing your request. Error: ' . $stmt->errorInfo()[2];
+                $form_message_type = 'danger';
+            }
+        } catch (Exception $e) {
+            error_log('Exception while saving contact submission: ' . $e->getMessage());
+            $form_message = 'Error: ' . $e->getMessage();
+            $form_message_type = 'danger';
+        }
     }
 }
 

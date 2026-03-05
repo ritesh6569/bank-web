@@ -1,0 +1,4 @@
+[05-Mar-2026 20:14:15 Asia/Kolkata] Contact form submission received: {"timestamp":"2026-03-05 20:14:15","post_data":{"contact_form":"1","name":"CSE Student","email":"csestudent2026@gmail.com","phone":"9356907874","subject":"ad","message":"ads"},"parsed_data":{"name":"CSE Student","email":"csestudent2026@gmail.com","phone":"9356907874","subject":"ad","message":"ads"}}
+[05-Mar-2026 20:14:15 Asia/Kolkata] Attempting to insert: name=CSE Student, email=csestudent2026@gmail.com, subject=ad
+[05-Mar-2026 20:14:15 Asia/Kolkata] Contact submission inserted successfully with ID: 2
+[05-Mar-2026 20:15:43 Asia/Kolkata] PHP Warning:  mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\xampp\htdocs\bank-website-grok\admin\contacts.php on line 64

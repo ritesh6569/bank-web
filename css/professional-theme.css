@@ -1,0 +1,444 @@
+/**
+ * Professional Banking Theme
+ * Consistent, modern, and professional styling across the entire application
+ * Color Scheme: Deep Blue (#0F172A), Slate Gray (#475569), White (#FFFFFF)
+ * Accent: Teal (#0F766E)
+ */
+
+:root {
+    /* Primary Colors */
+    --color-primary: #0F172A;
+    --color-primary-dark: #0C0E1A;
+    --color-primary-light: #1E293B;
+    
+    /* Secondary Colors */
+    --color-secondary: #475569;
+    --color-secondary-light: #64748B;
+    --color-secondary-lighter: #94A3B8;
+    
+    /* Accent Colors */
+    --color-accent: #0F766E;
+    --color-accent-light: #14B8A6;
+    --color-accent-dark: #0D5E56;
+    
+    /* Backgrounds */
+    --color-bg-primary: #FFFFFF;
+    --color-bg-secondary: #F8FAFC;
+    --color-bg-tertiary: #F1F5F9;
+    
+    /* Borders */
+    --color-border: #E2E8F0;
+    --color-border-dark: #CBD5E1;
+    
+    /* Text */
+    --color-text-primary: #0F172A;
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #64748B;
+    
+    /* Status Colors */
+    --color-success: #059669;
+    --color-warning: #D97706;
+    --color-danger: #DC2626;
+    --color-info: #0284C7;
+}
+
+/* Reset and Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary-light);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    color: var(--color-text-secondary);
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-accent-light);
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.12);
+    border-color: var(--color-border-dark);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-bottom: 2px solid var(--color-border);
+    padding: 1.25rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    color: var(--color-primary-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0F766E 0%, #0D5E56 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+}
+
+.btn-secondary {
+    background: var(--color-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: var(--color-secondary-light);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--color-accent);
+    color: white;
+}
+
+/* Badges */
+.badge {
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+}
+
+.badge-primary {
+    background: linear-gradient(135deg, #0F766E 0%, #0D5E56 100%);
+    color: white;
+}
+
+.badge-success {
+    background: var(--color-success);
+    color: white;
+}
+
+.badge-warning {
+    background: var(--color-warning);
+    color: white;
+}
+
+.badge-danger {
+    background: var(--color-danger);
+    color: white;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+.form-label {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Sections */
+.section {
+    padding: 4rem 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    color: var(--color-primary-light);
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 1rem;
+}
+
+.alert-success {
+    background: #ECFDF5;
+    border-color: #6EE7B7;
+    color: #065F46;
+}
+
+.alert-danger {
+    background: #FEE2E2;
+    border-color: #FCA5A5;
+    color: #7F1D1D;
+}
+
+.alert-warning {
+    background: #FEF3C7;
+    border-color: #FDE68A;
+    color: #78350F;
+}
+
+.alert-info {
+    background: #EFF6FF;
+    border-color: #93C5FD;
+    color: #0C2340;
+}
+
+/* Navigation */
+nav {
+    background: var(--color-primary);
+    padding: 1rem 0;
+}
+
+nav a {
+    color: var(--color-bg-primary);
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--color-accent-light);
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    color: white;
+}
+
+.header p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Footer */
+footer {
+    background: var(--color-primary);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 3rem 0 1rem;
+    margin-top: 4rem;
+}
+
+footer h5 {
+    color: white;
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+footer a:hover {
+    color: var(--color-accent-light);
+}
+
+/* Professional Service Cards */
+.service-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    box-shadow: 0 8px 24px rgba(15, 118, 110, 0.15);
+    border-color: var(--color-accent);
+    transform: translateY(-4px);
+}
+
+.service-card-icon {
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+}
+
+.service-card h4 {
+    color: var(--color-primary-light);
+    margin-bottom: 0.5rem;
+}
+
+.service-card p {
+    color: var(--color-text-secondary);
+}
+
+/* Table Styles */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table thead th {
+    background: var(--color-bg-tertiary);
+    color: var(--color-primary-light);
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+    padding: 1rem;
+    text-align: left;
+}
+
+.table tbody td {
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    color: var(--color-text-secondary);
+}
+
+.table tbody tr:hover {
+    background: var(--color-bg-tertiary);
+}
+
+/* Modal */
+.modal-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    border: none;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+/* Professional Accent Line */
+.accent-line {
+    width: 4px;
+    background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-dark));
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section {
+        padding: 2rem 0;
+    }
+}
+
+/* Smooth Transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+button,
+a,
+.card {
+    transition: all 0.3s ease;
+}
+
+/* Utility Classes */
+.text-primary {
+    color: var(--color-primary-light);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.bg-primary {
+    background: var(--color-primary);
+}
+
+.bg-secondary {
+    background: var(--color-bg-secondary);
+}
+
+.border-accent {
+    border: 1px solid var(--color-accent);
+}

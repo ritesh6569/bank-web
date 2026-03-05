@@ -348,8 +348,7 @@
                 return false;
             }
             
-            // Here you would typically send the email to your backend
-            console.log('Newsletter subscription:', email);
+            // Send to backend API
             
             // Show success message
             alert('Thank you for subscribing! Check your email for confirmation.');

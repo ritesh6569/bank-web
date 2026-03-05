@@ -8,6 +8,7 @@
 define('SITE_NAME', 'Professional Bank');
 define('SITE_URL', 'http://localhost/bank-website-grok/');
 define('SITE_EMAIL', 'support@bank.com');
+define('ADMIN_EMAIL', 'admin@bank.com');
 define('SITE_PHONE', '+1 (234) 567-890');
 define('SUPPORT_EMAIL', 'support@bank.com');
 
@@ -35,11 +36,14 @@ define('DOWNLOAD_UPLOAD_DIR', __DIR__ . '/uploads/downloads/');
 define('GALLERY_UPLOAD_DIR', __DIR__ . '/uploads/gallery/');
 
 // Set error reporting for development
+// In production, errors should be logged to a file, not displayed
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/logs/error.log');
 
 // Production mode (set to false in production)
-define('DEVELOPMENT_MODE', true);
+define('DEVELOPMENT_MODE', false);
 
 // Security headers
 header('X-Content-Type-Options: nosniff');

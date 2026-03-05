@@ -58,6 +58,26 @@ CREATE TABLE IF NOT EXISTS gallery (
     FOREIGN KEY (created_by) REFERENCES admin_users(id) ON DELETE SET NULL
 );
 
+-- Contact Submissions Table
+CREATE TABLE IF NOT EXISTS contact_submissions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    subject VARCHAR(255) NOT NULL,
+    message LONGTEXT NOT NULL,
+    status ENUM('new', 'replied', 'archived') DEFAULT 'new',
+    admin_reply LONGTEXT,
+    admin_reply_by INT,
+    admin_reply_at DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_reply_by) REFERENCES admin_users(id) ON DELETE SET NULL,
+    KEY idx_email (email),
+    KEY idx_status (status),
+    KEY idx_created_at (created_at)
+);
+
 -- Insert default admin user (username: admin, password: password)
 INSERT INTO admin_users (username, password, email, full_name) VALUES 
 ('admin', '$2y$10$YIjlrWyV7w3k5/K2w5K5w.e9rXK5/K2w5K5w.e9rXK5/K2w5K5w.', 'admin@bank.com', 'Administrator');

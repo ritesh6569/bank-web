@@ -29,11 +29,9 @@ function getDBConnection() {
                 )
             );
         } catch (PDOException $e) {
-            if (DEVELOPMENT_MODE) {
-                die('Database connection failed: ' . $e->getMessage());
-            } else {
-                die('Database connection error. Please try again later.');
-            }
+            // Log error securely and show generic message to users
+            error_log('Database connection failed: ' . $e->getMessage());
+            die('Database connection error. Please try again later.');
         }
     }
     
