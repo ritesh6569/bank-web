@@ -61,7 +61,7 @@ $notices = getActiveNotices();
     <?php endif; ?>
 
     <!-- Page Header -->
-    <div class="bg-primary text-white py-5">
+    <div class="page-header">
         <div class="container-lg">
             <h1 class="mb-2">Banking Services</h1>
             <p class="lead">Comprehensive digital and traditional banking services for modern living</p>

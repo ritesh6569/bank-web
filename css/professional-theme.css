@@ -563,7 +563,7 @@ blockquote {
 .hero-section {
     background: var(--blue-900);
     color: var(--white);
-    padding: 7rem 0 5rem;
+    padding: 14rem 0 12rem;
     position: relative;
     overflow: hidden;
 }
@@ -1414,7 +1414,7 @@ hr {
     .section { padding: var(--space-16) 0; }
     h1 { font-size: 2.25rem; }
     h2 { font-size: 1.875rem; }
-    .hero-section { padding: 5rem 0 3.5rem; }
+    .hero-section { padding: 7rem 0 6rem; }
 }
 
 @media (max-width: 768px) {
@@ -1427,7 +1427,7 @@ hr {
     .section { padding: var(--space-12) 0; }
     .section-sm { padding: var(--space-8) 0; }
 
-    .hero-section { padding: 3.5rem 0 2.5rem; }
+    .hero-section { padding: 5rem 0 4rem; }
     .hero-title { font-size: 1.875rem; }
     .hero-subtitle { font-size: var(--font-size-md); }
 
@@ -1456,7 +1456,7 @@ hr {
     .btn-lg { padding: 0.75rem 1.75rem; font-size: var(--font-size-sm); }
 
     .section { padding: var(--space-10) 0; }
-    .hero-section { padding: 2.5rem 0 2rem; }
+    .hero-section { padding: 4rem 0 3.5rem; }
 
     .admin-sidebar { transform: translateX(-100%); transition: transform var(--transition); }
     .admin-sidebar.open { transform: translateX(0); }

@@ -64,7 +64,7 @@ $notices = getActiveNotices();
     <?php endif; ?>
 
     <!-- Page Header -->
-    <div class="bg-primary text-white py-5">
+    <div class="page-header">
         <div class="container-lg">
             <h1 class="mb-2">About Professional Bank</h1>
             <p class="lead">Learn more about our rich history, leadership, and commitment to excellence</p>

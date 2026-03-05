@@ -63,7 +63,7 @@ $notices = getActiveNotices();
     <?php endif; ?>
 
     <!-- Page Header -->
-    <div class="bg-primary text-white py-5">
+    <div class="page-header">
         <div class="container-lg">
             <h1 class="mb-2">Deposit Products</h1>
             <p class="lead">Choose the right deposit product for your financial goals</p>

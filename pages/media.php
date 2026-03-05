@@ -6,6 +6,7 @@
 $page_title = 'Media - Professional Bank';
 $current_page = 'media';
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/config.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/includes/header.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/includes/data-fetcher.php';
 
@@ -15,7 +16,7 @@ $news = $data_fetcher->getNews();
 ?>
 
     <!-- Page Header -->
-    <div class="bg-primary text-white py-5">
+    <div class="page-header">
         <div class="container-lg">
             <h1 class="mb-2">Media Center</h1>
             <p class="lead">Access interest rates, service charges, notices, and media resources</p>
@@ -448,31 +449,36 @@ $news = $data_fetcher->getNews();
                     
                     <div class="row g-4 mt-4">
                         <?php
-                        $gallery_items = [
-                            ['title' => 'Main Branch Opening', 'category' => 'Events'],
-                            ['title' => 'Customer Service Excellence', 'category' => 'Operations'],
-                            ['title' => 'Digital Banking Expo', 'category' => 'Events'],
-                            ['title' => 'Community Service Initiative', 'category' => 'CSR'],
-                            ['title' => 'Annual Staff Meeting', 'category' => 'Internal'],
-                            ['title' => 'New ATM Installation', 'category' => 'Operations'],
-                            ['title' => 'Customer Appreciation Day', 'category' => 'Events'],
-                            ['title' => 'Financial Literacy Workshop', 'category' => 'CSR'],
-                        ];
+                        $gallery_items = isset($data_fetcher) ? $data_fetcher->getGallery(20) : [];
                         
-                        foreach ($gallery_items as $item):
+                        if (!empty($gallery_items)):
+                            foreach ($gallery_items as $item):
+                                $img_src = SITE_URL . $item['image_path'];
+                                $alt_text = !empty($item['alt_text']) ? $item['alt_text'] : htmlspecialchars($item['title']);
                         ?>
                             <div class="col-md-6 col-lg-3">
                                 <div class="card h-100">
-                                    <div style="height: 200px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-image" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
-                                    </div>
+                                    <img src="<?php echo htmlspecialchars($img_src); ?>"
+                                         alt="<?php echo htmlspecialchars($alt_text); ?>"
+                                         class="card-img-top"
+                                         style="height: 200px; object-fit: cover;">
                                     <div class="card-body">
                                         <h6 class="card-title"><?php echo htmlspecialchars($item['title']); ?></h6>
-                                        <span class="badge bg-secondary"><?php echo htmlspecialchars($item['category']); ?></span>
+                                        <?php if (!empty($item['category'])): ?>
+                                            <span class="badge bg-secondary"><?php echo htmlspecialchars($item['category']); ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        <?php
+                            endforeach;
+                        else:
+                        ?>
+                            <div class="col-12 text-center py-5">
+                                <i class="fas fa-images fa-3x mb-3" style="color: var(--gold-500);"></i>
+                                <p class="text-muted">No gallery images available at this time.</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>

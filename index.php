@@ -7,6 +7,7 @@ $page_title = 'Home - Professional Bank';
 $current_page = 'home';
 
 // Include header
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/config.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/includes/header.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/includes/data-fetcher.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/includes/notices-fetcher.php';
@@ -21,7 +22,7 @@ $notices = getActiveNotices();
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container-lg">
-            <div class="row align-items-center min-vh-100">
+            <div class="row align-items-center">
                 <div class="col-lg-6 hero-content">
                     <h1 class="hero-title">Your Trusted Banking Partner</h1>
                     <p class="hero-subtitle">Experience modern banking with secure, innovative financial solutions designed for your success.</p>
@@ -54,12 +55,12 @@ $notices = getActiveNotices();
             <div class="row g-4">
                 <?php foreach ($offers as $offer): ?>
                     <div class="col-md-6 col-lg-3">
-                        <div class="card feature-card">
-                            <div>
-                                <i class="<?php echo htmlspecialchars($offer['icon']); ?>"></i>
-                                <h5 class="card-title mt-3"><?php echo htmlspecialchars($offer['title']); ?></h5>
-                                <p class="text-muted"><?php echo htmlspecialchars($offer['description']); ?></p>
-                                <a href="/bank-website-grok/pages/deposits.php" class="btn btn-sm btn-primary">Learn More</a>
+                        <div class="card feature-card h-100">
+                            <div class="card-body d-flex flex-column p-4">
+                                <i class="<?php echo htmlspecialchars($offer['icon']); ?> mb-3" style="font-size:2rem;"></i>
+                                <h5 class="card-title mb-2"><?php echo htmlspecialchars($offer['title']); ?></h5>
+                                <p class="text-muted mb-4 flex-grow-1"><?php echo htmlspecialchars($offer['description']); ?></p>
+                                <a href="/bank-website-grok/pages/deposits.php" class="btn btn-sm btn-primary mt-auto align-self-start">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -369,8 +370,12 @@ $notices = getActiveNotices();
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 overflow-hidden">
                             <div style="background: var(--color-bg-tertiary); height: 240px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                                <?php if (!empty($image['image_path']) && file_exists($_SERVER['DOCUMENT_ROOT'] . $image['image_path'])): ?>
-                                    <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="<?php echo htmlspecialchars($image['alt_text'] ?? $image['title']); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='scale(1)';">
+                                <?php
+                                $img_full_path = $_SERVER['DOCUMENT_ROOT'] . '/bank-website-grok/' . $image['image_path'];
+                                $img_url = SITE_URL . $image['image_path'];
+                                ?>
+                                <?php if (!empty($image['image_path']) && file_exists($img_full_path)): ?>
+                                    <img src="<?php echo htmlspecialchars($img_url); ?>" alt="<?php echo htmlspecialchars($image['alt_text'] ?? $image['title']); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='scale(1)';">
                                 <?php else: ?>
                                     <i class="fas fa-image" style="font-size: 2.5rem; color: var(--color-border-dark);"></i>
                                 <?php endif; ?>
