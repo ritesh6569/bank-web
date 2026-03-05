@@ -1,5 +1,5 @@
 # PHP 8.2 with Apache
-# Cache-bust: 2026-03-06-v5
+# Cache-bust: 2026-03-06-v6
 FROM php:8.2-apache
 
 # Install required PHP extensions
@@ -49,4 +49,8 @@ RUN mkdir -p uploads/gallery uploads/downloads logs \
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+# Copy startup script and make executable
+COPY docker-start.sh /docker-start.sh
+RUN chmod +x /docker-start.sh
+
+CMD ["/docker-start.sh"]
