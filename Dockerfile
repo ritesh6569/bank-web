@@ -29,8 +29,11 @@ COPY composer.json composer.lock ./
 # Install PHP dependencies (no dev, optimise autoloader)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Copy application files
+# Copy application files (cache busted on every push via git commit label)
 COPY . .
+
+# Copy Apache virtual host config from file (reliable, no shell escaping issues)
+COPY apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Create writable directories and set permissions
 RUN mkdir -p uploads/gallery uploads/downloads logs \
@@ -38,18 +41,6 @@ RUN mkdir -p uploads/gallery uploads/downloads logs \
   && chmod -R 755 /var/www/html \
   && chmod -R 775 /var/www/html/uploads \
   && chmod -R 775 /var/www/html/logs
-
-# Apache virtual host — allows .htaccess overrides
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html\n\
-    <Directory /var/www/html>\n\
-        Options -Indexes +FollowSymLinks\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
-    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
 
