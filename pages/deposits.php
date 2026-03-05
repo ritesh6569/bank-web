@@ -334,10 +334,10 @@ $notices = getActiveNotices();
         <div class="container-lg text-center">
             <h2 class="mb-3">Ready to Start Saving?</h2>
             <p class="lead mb-4">Visit any of our 14 branches to open a deposit account today. Our staff will guide you to the best scheme for your needs.</p>
-            <a href="/pages/contact.php" class="btn btn-light btn-lg me-3">
+            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-light btn-lg me-3">
                 <i class="fas fa-map-marker-alt me-2"></i>Find a Branch
             </a>
-            <a href="/pages/media.php" class="btn btn-outline-light btn-lg">
+            <a href="<?php echo SITE_URL; ?>pages/media.php" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-percent me-2"></i>View Interest Rates
             </a>
         </div>

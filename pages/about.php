@@ -300,7 +300,7 @@ $notices = getActiveNotices();
                         <p class="fs-5 fst-italic">"Welcome dear customers!"</p>
                     </blockquote>
                     <p>I am excited to welcome you all to our Bank. I guarantee a realm of services to your complete Banking needs. Here I am always ready to help you. Reach me for any query you have — I will be happy to address them.</p>
-                    <a href="/pages/contact.php" class="btn btn-primary mt-2">
+                    <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-primary mt-2">
                         <i class="fas fa-envelope me-2"></i>Get In Touch
                     </a>
                 </div>

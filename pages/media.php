@@ -491,7 +491,7 @@ try {
                                                 <?php if (!empty($dl['description'])): ?>
                                                 <p class="small text-muted mb-2"><?php echo htmlspecialchars($dl['description']); ?></p>
                                                 <?php endif; ?>
-                                                <a href="/uploads/downloads/<?php echo basename($dl['file_path']); ?>" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-download me-1"></i>Download</a>
+                                                <a href="<?php echo SITE_URL; ?>uploads/downloads/<?php echo basename($dl['file_path']); ?>" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-download me-1"></i>Download</a>
                                             </div>
                                         </div>
                                     </div>
@@ -516,7 +516,7 @@ try {
                     <?php foreach ($gallery_images as $gi => $img): ?>
                     <div class="col-6 col-md-4 col-lg-3">
                         <div class="card overflow-hidden h-100" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#galleryModal<?php echo $gi; ?>">
-                            <img src="/uploads/gallery/<?php echo basename($img['image_path']); ?>"
+                            <img src="<?php echo SITE_URL; ?>uploads/gallery/<?php echo basename($img['image_path']); ?>"
                                  class="card-img-top"
                                  style="height:180px;object-fit:cover;"
                                  alt="<?php echo htmlspecialchars($img['title'] ?? 'Gallery'); ?>"
@@ -531,7 +531,7 @@ try {
                             <div class="modal-content">
                                 <div class="modal-header"><h6 class="modal-title"><?php echo htmlspecialchars($img['title'] ?? 'Gallery Image'); ?></h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
                                 <div class="modal-body p-0 text-center">
-                                    <img src="/uploads/gallery/<?php echo basename($img['image_path']); ?>"
+                                    <img src="<?php echo SITE_URL; ?>uploads/gallery/<?php echo basename($img['image_path']); ?>"
                                          class="img-fluid"
                                          alt="<?php echo htmlspecialchars($img['title'] ?? 'Gallery'); ?>"
                                          onerror="this.src='/assets/images/placeholder.jpg'">
@@ -558,10 +558,10 @@ try {
         <div class="container-lg text-center">
             <h2 class="mb-3">Have Questions?</h2>
             <p class="lead mb-4">Our team is ready to help you with any queries about our rates, charges, or services.</p>
-            <a href="/pages/contact.php" class="btn btn-light btn-lg me-3">
+            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-light btn-lg me-3">
                 <i class="fas fa-phone me-2"></i>Contact Us
             </a>
-            <a href="/pages/services.php" class="btn btn-outline-light btn-lg">
+            <a href="<?php echo SITE_URL; ?>pages/services.php" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-concierge-bell me-2"></i>Our Services
             </a>
         </div>

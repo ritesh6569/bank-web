@@ -101,7 +101,7 @@ $notices = getActiveNotices();
                             <i class="fas fa-map-marker-alt fa-3x mb-3" style="color:#06b6d4;"></i>
                             <h5 class="card-title">14 Branch Network</h5>
                             <p class="text-muted small">Serving customers across Belagavi district and beyond with 14 convenient branch locations.</p>
-                            <a href="/pages/contact.php" class="btn btn-sm btn-outline-info mt-2">Find a Branch</a>
+                            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-sm btn-outline-info mt-2">Find a Branch</a>
                         </div>
                     </div>
                 </div>
@@ -328,10 +328,10 @@ $notices = getActiveNotices();
         <div class="container-lg text-center">
             <h2 class="mb-3">Need Any of Our Services?</h2>
             <p class="lead mb-4">Visit your nearest branch or contact us for assistance with any of our banking services.</p>
-            <a href="/pages/contact.php" class="btn btn-light btn-lg me-3">
+            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-light btn-lg me-3">
                 <i class="fas fa-map-marker-alt me-2"></i>Find a Branch
             </a>
-            <a href="/pages/media.php" class="btn btn-outline-light btn-lg">
+            <a href="<?php echo SITE_URL; ?>pages/media.php" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-file-invoice-dollar me-2"></i>View Service Charges
             </a>
         </div>

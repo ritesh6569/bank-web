@@ -28,13 +28,13 @@ $notices = getActiveNotices();
                     <h1 class="hero-title">A bank that understands you!</h1>
                     <p class="hero-subtitle">Keep Faith — Shri Shantappanna Miraji Urban Co-op. Bank Ltd., Chikodi, serving the community since 1961.</p>
                     <div class="hero-buttons">
-                        <a href="/pages/deposits.php" class="btn btn-light me-3 mb-2">
+                        <a href="<?php echo SITE_URL; ?>pages/deposits.php" class="btn btn-light me-3 mb-2">
                             <i class="fas fa-piggy-bank me-2"></i>Deposits
                         </a>
-                        <a href="/pages/loans.php" class="btn btn-outline-light mb-2">
+                        <a href="<?php echo SITE_URL; ?>pages/loans.php" class="btn btn-outline-light mb-2">
                             <i class="fas fa-handshake me-2"></i>Loans
                         </a>
-                        <a href="/pages/about.php#the-bank" class="btn btn-outline-light mb-2 ms-2">
+                        <a href="<?php echo SITE_URL; ?>pages/about.php#the-bank" class="btn btn-outline-light mb-2 ms-2">
                             <i class="fas fa-info-circle me-2"></i>Read More
                         </a>
                     </div>
@@ -83,7 +83,7 @@ $notices = getActiveNotices();
             
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3">
-                    <a href="/pages/deposits.php#savings" class="card text-decoration-none h-100" style="border-left: 4px solid var(--secondary-color);">
+                    <a href="<?php echo SITE_URL; ?>pages/deposits.php#savings" class="card text-decoration-none h-100" style="border-left: 4px solid var(--secondary-color);">
                         <div class="card-body text-center">
                             <i class="fas fa-piggy-bank" style="font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
                             <h5 class="card-title">Deposits</h5>
@@ -93,7 +93,7 @@ $notices = getActiveNotices();
                 </div>
                 
                 <div class="col-md-6 col-lg-3">
-                    <a href="/pages/loans.php#gold" class="card text-decoration-none h-100" style="border-left: 4px solid var(--success-color);">
+                    <a href="<?php echo SITE_URL; ?>pages/loans.php#gold" class="card text-decoration-none h-100" style="border-left: 4px solid var(--success-color);">
                         <div class="card-body text-center">
                             <i class="fas fa-hand-holding-usd" style="font-size: 2.5rem; color: var(--success-color); margin-bottom: 1rem;"></i>
                             <h5 class="card-title">Loans</h5>
@@ -103,7 +103,7 @@ $notices = getActiveNotices();
                 </div>
                 
                 <div class="col-md-6 col-lg-3">
-                    <a href="/pages/services.php#rtgs" class="card text-decoration-none h-100" style="border-left: 4px solid var(--warning-color);">
+                    <a href="<?php echo SITE_URL; ?>pages/services.php#rtgs" class="card text-decoration-none h-100" style="border-left: 4px solid var(--warning-color);">
                         <div class="card-body text-center">
                             <i class="fas fa-exchange-alt" style="font-size: 2.5rem; color: var(--warning-color); margin-bottom: 1rem;"></i>
                             <h5 class="card-title">Services</h5>
@@ -113,7 +113,7 @@ $notices = getActiveNotices();
                 </div>
                 
                 <div class="col-md-6 col-lg-3">
-                    <a href="/pages/contact.php" class="card text-decoration-none h-100" style="border-left: 4px solid var(--danger-color);">
+                    <a href="<?php echo SITE_URL; ?>pages/contact.php" class="card text-decoration-none h-100" style="border-left: 4px solid var(--danger-color);">
                         <div class="card-body text-center">
                             <i class="fas fa-phone" style="font-size: 2.5rem; color: var(--danger-color); margin-bottom: 1rem;"></i>
                             <h5 class="card-title">Support</h5>
@@ -160,7 +160,7 @@ $notices = getActiveNotices();
                                     <strong>Yeshwant Pigmy Deposit</strong> — Daily doorstep collection
                                 </li>
                             </ul>
-                            <a href="/pages/deposits.php" class="btn btn-primary mt-3">
+                            <a href="<?php echo SITE_URL; ?>pages/deposits.php" class="btn btn-primary mt-3">
                                 View All Deposits <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -193,7 +193,7 @@ $notices = getActiveNotices();
                                     <strong>Vehicle Loan</strong> — 4-wheeler from 10.50%, 2-wheeler 11.00%
                                 </li>
                             </ul>
-                            <a href="/pages/loans.php" class="btn btn-primary mt-3">
+                            <a href="<?php echo SITE_URL; ?>pages/loans.php" class="btn btn-primary mt-3">
                                 View All Loans <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -232,7 +232,7 @@ $notices = getActiveNotices();
             </div>
             
             <div class="text-center mt-4">
-                <a href="/pages/media.php" class="btn btn-primary">
+                <a href="<?php echo SITE_URL; ?>pages/media.php" class="btn btn-primary">
                     View All News <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
@@ -345,7 +345,7 @@ $notices = getActiveNotices();
                                 <?php if (!empty($download['category'])): ?>
                                     <span class="badge" style="background: rgba(15, 118, 110, 0.1); color: var(--color-accent); border: 1px solid rgba(15, 118, 110, 0.2);"><?php echo htmlspecialchars($download['category']); ?></span>
                                 <?php endif; ?>
-                                <a href="/admin/downloads.php?action=download&id=<?php echo $download['id']; ?>" class="btn btn-sm btn-primary w-100 mt-3">
+                                <a href="<?php echo SITE_URL; ?>admin/downloads.php?action=download&id=<?php echo $download['id']; ?>" class="btn btn-sm btn-primary w-100 mt-3">
                                     <i class="fas fa-download me-1"></i> Download
                                 </a>
                             </div>
@@ -453,10 +453,10 @@ $notices = getActiveNotices();
         <div class="container-lg text-center">
             <h2 class="mb-3">Keep Faith — 65 Years of Banking</h2>
             <p class="lead mb-4">Join thousands of satisfied customers of Shri Shantappanna Miraji Urban Co-op. Bank Ltd., Chikodi who trust us with their financial needs.</p>
-            <a href="/pages/deposits.php" class="btn btn-light btn-lg me-3">
+            <a href="<?php echo SITE_URL; ?>pages/deposits.php" class="btn btn-light btn-lg me-3">
                 <i class="fas fa-piggy-bank me-2"></i>Our Deposits
             </a>
-            <a href="/pages/contact.php" class="btn btn-outline-light btn-lg">
+            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-phone me-2"></i>Contact Us
             </a>
         </div>
