@@ -4,6 +4,11 @@
  * Includes navigation bar, brand, and common meta tags
  */
 
+// Always ensure config is loaded (covers pages that don't include it directly)
+if (!defined('SITE_URL')) {
+    require_once __DIR__ . '/../config.php';
+}
+
 // Set default page title
 $page_title = isset($page_title) ? $page_title : 'Bank Website';
 $current_page = isset($current_page) ? $current_page : 'home';
