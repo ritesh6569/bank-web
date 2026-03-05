@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # Render startup script
 # Force Apache to listen on 0.0.0.0 on the port Render assigns (default 80)
 
