@@ -1,5 +1,5 @@
 # PHP 8.2 with Apache
-# Cache-bust: 2026-03-05-v3
+# Cache-bust: 2026-03-06-v4
 FROM php:8.2-apache
 
 # Install required PHP extensions
@@ -18,6 +18,11 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules
 RUN a2enmod rewrite headers deflate expires
 
+# Force Apache to listen on 0.0.0.0:80 (required for Render port detection)
+RUN sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/ports.conf \
+  && sed -i 's/<VirtualHost \*:80>/<VirtualHost 0.0.0.0:80>/' /etc/apache2/sites-available/000-default.conf 2>/dev/null || true \
+  && echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Set working directory
 WORKDIR /var/www/html
 
@@ -30,11 +35,14 @@ COPY composer.json composer.lock ./
 # Install PHP dependencies (no dev, optimise autoloader)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Copy application files (cache busted on every push via git commit label)
+# Copy application files
 COPY . .
 
-# Copy Apache virtual host config from file (reliable, no shell escaping issues)
+# Copy Apache virtual host config (overwrites default after COPY . .)
 COPY apache-vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Fix VirtualHost to bind 0.0.0.0 after our config is copied
+RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost 0.0.0.0:80>/' /etc/apache2/sites-available/000-default.conf
 
 # Create writable directories and set permissions
 RUN mkdir -p uploads/gallery uploads/downloads logs \
