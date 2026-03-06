@@ -55,11 +55,19 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/professional-theme.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/admin-responsive.css">
 </head>
 <body>
+    <!-- Hamburger Toggle (mobile) -->
+    <button class="hamburger-btn" id="sidebarToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Overlay backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- Sidebar Navigation -->
     <div class="d-flex" style="min-height: 100vh;">
-        <nav class="sidebar" style="width: 250px; background: #1A2533; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 4px 0 12px rgba(15,31,53,0.15);">
+        <nav class="sidebar" id="adminSidebar" style="width: 250px; background: #1A2533; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 4px 0 12px rgba(15,31,53,0.15);">
             <div class="sidebar-header mb-4 px-3">
                 <div style="font-size: 1.2rem; font-weight: 800; color: white; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
                     <i class="fas fa-university me-2" style="color: #B8860B;"></i>Admin Panel
@@ -112,10 +120,10 @@ try {
         <main style="margin-left: 250px; width: calc(100% - 250px); padding: 2rem;">
             <div class="container-fluid">
                 <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-start align-items-md-center gap-2 mb-4">
                     <div>
                         <h1 class="mb-1">Dashboard</h1>
-                        <p class="text-muted">Welcome back, <?php echo $_SESSION['admin_name'] ?? 'Admin'; ?>!</p>
+                        <p class="text-muted mb-0">Welcome back, <?php echo $_SESSION['admin_name'] ?? 'Admin'; ?>!</p>
                     </div>
                     <div class="text-end">
                         <p class="text-muted mb-0" id="currentDateTime"></p>
@@ -134,7 +142,7 @@ try {
 
                 <!-- Stats Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-6 col-md-3 mb-3">
                         <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #3b82f6;">
                             <div class="card-body">
                                 <h6 class="text-muted mb-2"><i class="fas fa-bullhorn"></i> Notices</h6>
@@ -144,7 +152,7 @@ try {
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-6 col-md-3 mb-3">
                         <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #10b981; animation-delay: 0.1s;">
                             <div class="card-body">
                                 <h6 class="text-muted mb-2"><i class="fas fa-download"></i> Downloads</h6>
@@ -154,7 +162,7 @@ try {
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-6 col-md-3 mb-3">
                         <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #f59e0b; animation-delay: 0.2s;">
                             <div class="card-body">
                                 <h6 class="text-muted mb-2"><i class="fas fa-images"></i> Gallery Items</h6>
@@ -164,7 +172,7 @@ try {
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-6 col-md-3 mb-3">
                         <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #8b5cf6; animation-delay: 0.25s;">
                             <div class="card-body">
                                 <h6 class="text-muted mb-2"><i class="fas fa-envelope"></i> Contact Submissions</h6>
@@ -174,7 +182,7 @@ try {
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-6 col-md-3 mb-3">
                         <div class="card stat-card animate__animated animate__fadeInUp" style="border-left: 4px solid #ef4444; animation-delay: 0.3s;">
                             <div class="card-body">
                                 <h6 class="text-muted mb-2"><i class="fas fa-cogs"></i> System</h6>
@@ -239,9 +247,19 @@ try {
             };
             document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options);
         }
-        
         updateDateTime();
         setInterval(updateDateTime, 60000);
+
+        // Responsive sidebar toggle
+        (function(){
+            var toggle  = document.getElementById('sidebarToggle');
+            var sidebar = document.getElementById('adminSidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            function openSidebar()  { sidebar.classList.add('sidebar-open');    overlay.classList.add('active'); }
+            function closeSidebar() { sidebar.classList.remove('sidebar-open'); overlay.classList.remove('active'); }
+            if (toggle)  toggle.addEventListener('click', function(){ sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar(); });
+            if (overlay) overlay.addEventListener('click', closeSidebar);
+        })();
     </script>
     <style>
         :root {
@@ -284,23 +302,6 @@ try {
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             border: none;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-            }
-
-            main {
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
-
-            .d-flex {
-                flex-direction: column !important;
-            }
         }
     </style>
 </body>

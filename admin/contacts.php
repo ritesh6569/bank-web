@@ -204,6 +204,7 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/admin-responsive.css">
     <style>
         body { background-color: #f0f4f8; font-family: 'Roboto', sans-serif; }
 
@@ -293,11 +294,93 @@ try {
         .sub-subject-line .sub-subject { font-weight: 600; color: #1e293b; }
         .sub-subject-line .sub-preview { color: #9ca3af; }
 
+        /* Mobile meta line (status + time) — hidden on desktop */
+        .sub-mobile-meta { display: none; }
+
         /* Right side */
         .sub-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; flex-shrink: 0; }
         .sub-time { font-size: 0.72rem; color: #9ca3af; white-space: nowrap; }
 
         .status-badge { font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600; }
+
+        /* ── Mobile: submission rows ── */
+        @media (max-width: 640px) {
+            /* Row becomes a 2-col grid: [avatar] [content block] */
+            .sub-row {
+                display: grid !important;
+                grid-template-columns: 36px 1fr;
+                grid-template-rows: auto auto;
+                column-gap: 0.65rem;
+                row-gap: 0.3rem;
+                padding: 0.7rem 0.85rem;
+                align-items: start;
+            }
+
+            /* Avatar — row 1, col 1 */
+            .sub-avatar {
+                grid-column: 1; grid-row: 1;
+                width: 34px !important; height: 34px !important;
+                font-size: 0.76rem !important;
+                align-self: center;
+            }
+
+            /* Unread dot — hide it (status badge replaces it) */
+            .sub-unread-dot { display: none !important; }
+
+            /* Name column (inline flex:0 0 180px) — row 1, col 2 */
+            .sub-row > div[style*="flex:0 0 180px"],
+            .sub-row > div[style*="flex: 0 0 180px"] {
+                grid-column: 2; grid-row: 1;
+                flex: unset !important;
+                min-width: 0;
+                display: flex;
+                align-items: baseline;
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+
+            /* Subject body — row 2, col 2 */
+            .sub-body {
+                grid-column: 2; grid-row: 2;
+                min-width: 0;
+            }
+            .sub-subject-line {
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: unset !important;
+                font-size: 0.79rem;
+            }
+            .sub-preview { display: none; } /* hide preview on mobile to save space */
+
+            /* Status badge — hide separate status div, show inline in subject line via badge */
+            .sub-row > div[style*="flex:0 0 80px"],
+            .sub-row > div[style*="flex: 0 0 80px"] {
+                display: none !important;
+            }
+
+            /* Time — hide in separate div; shown inline via name row */
+            .sub-row > .sub-time[style*="flex:0 0 70px"],
+            .sub-row > div[style*="flex:0 0 70px"],
+            .sub-row > div[style*="flex: 0 0 70px"] {
+                display: none !important;
+            }
+
+            /* Name text */
+            .sub-name { font-size: 0.84rem; white-space: normal !important; }
+            .sub-email { font-size: 0.7rem; white-space: normal !important; }
+
+            /* Show mobile meta line */
+            .sub-mobile-meta {
+                display: flex !important;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 0.3rem;
+            }
+            .sub-mobile-meta .sub-time {
+                font-size: 0.69rem;
+                color: #9ca3af;
+            }
+        }
 
         .complaint-pill {
             display: inline-block; background: #B8860B; color: white;
@@ -405,9 +488,16 @@ try {
     </style>
 </head>
 <body>
+    <!-- Hamburger Toggle (mobile) -->
+    <button class="hamburger-btn" id="sidebarToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Overlay backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="admin-wrapper">
         <!-- Sidebar Navigation -->
-        <nav class="sidebar">
+        <nav class="sidebar" id="adminSidebar">
             <div class="sidebar-header mb-4 px-3">
                 <div style="font-size: 1.2rem; font-weight: 800; color: white; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
                     <i class="fas fa-university me-2" style="color: #B8860B;"></i>Admin Panel
@@ -799,12 +889,17 @@ try {
                                             <span class="sub-subject"><?php echo escape($displaySubject); ?></span>
                                             <span class="sub-preview"> — <?php echo escape($preview); ?><?php echo strlen($contact['message']) > 70 ? '…' : ''; ?></span>
                                         </div>
+                                        <!-- Mobile-only: status + time on second line -->
+                                        <div class="sub-mobile-meta">
+                                            <span class="badge bg-<?php echo $badgeClass; ?> status-badge"><?php echo $badgeText; ?></span>
+                                            <span class="sub-time"><?php echo timeAgo($contact['created_at']); ?></span>
+                                        </div>
                                     </div>
-                                    <!-- Status -->
+                                    <!-- Status (desktop) -->
                                     <div style="flex:0 0 80px; text-align:center;">
                                         <span class="badge bg-<?php echo $badgeClass; ?> status-badge"><?php echo $badgeText; ?></span>
                                     </div>
-                                    <!-- Time -->
+                                    <!-- Time (desktop) -->
                                     <div class="sub-time" style="flex:0 0 70px; text-align:right;"><?php echo timeAgo($contact['created_at']); ?></div>
                                 </div>
                             <?php endforeach; ?>
@@ -817,5 +912,16 @@ try {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function(){
+        var toggle  = document.getElementById('sidebarToggle');
+        var sidebar = document.getElementById('adminSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        function openSidebar()  { sidebar.classList.add('sidebar-open');    overlay.classList.add('active'); }
+        function closeSidebar() { sidebar.classList.remove('sidebar-open'); overlay.classList.remove('active'); }
+        if (toggle)  toggle.addEventListener('click', function(){ sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar(); });
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+    })();
+    </script>
 </body>
 </html>

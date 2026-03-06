@@ -74,7 +74,7 @@ $notices = getActiveNotices();
     </div>
 
     <!-- Sub-navigation -->
-    <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; position: sticky; top: 56px; z-index: 100;">
+    <div id="aboutSubNav" style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; position: sticky; top: 64px; z-index: 100;">
         <div class="container-lg">
             <nav class="nav nav-pills flex-nowrap overflow-auto py-2 gap-2">
                 <a class="nav-link btn btn-sm btn-outline-primary" href="#the-bank">The Bank</a>
@@ -86,6 +86,27 @@ $notices = getActiveNotices();
             </nav>
         </div>
     </div>
+    <script>
+    (function() {
+        // Dynamically set sticky top for sub-nav and scroll-margin-top on all sections
+        // to correctly clear the navbar (+ info bar on desktop) + sub-nav height
+        function fixScrollMargins() {
+            var navbar = document.querySelector('.navbar');
+            var subNav = document.getElementById('aboutSubNav');
+            if (!navbar || !subNav) return;
+            var navbarBottom = navbar.getBoundingClientRect().bottom + window.scrollY;
+            // Set sub-nav to stick right below the navbar
+            subNav.style.top = navbar.offsetHeight + 'px';
+            var totalOffset = navbar.offsetHeight + subNav.offsetHeight + 8;
+            var sections = document.querySelectorAll('#the-bank, #our-founder, #chairman, #board-of-directors, #board-of-management, #general-manager');
+            sections.forEach(function(s) { s.style.scrollMarginTop = totalOffset + 'px'; });
+        }
+        window.addEventListener('load', fixScrollMargins);
+        window.addEventListener('resize', fixScrollMargins);
+        if (document.readyState !== 'loading') fixScrollMargins();
+        else document.addEventListener('DOMContentLoaded', fixScrollMargins);
+    })();
+    </script>
 
     <!-- ===================== THE BANK ===================== -->
     <section class="section" id="the-bank">

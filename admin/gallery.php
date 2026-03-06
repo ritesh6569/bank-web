@@ -142,11 +142,19 @@ if ($action === 'list') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/professional-theme.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/admin-responsive.css">
 </head>
 <body>
+    <!-- Hamburger Toggle (mobile) -->
+    <button class="hamburger-btn" id="sidebarToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Overlay backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="d-flex" style="min-height: 100vh;">
         <!-- Sidebar -->
-        <nav class="sidebar" style="width: 250px; background: #1A2533; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 4px 0 12px rgba(15,31,53,0.15);">
+        <nav class="sidebar" id="adminSidebar" style="width: 250px; background: #1A2533; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 4px 0 12px rgba(15,31,53,0.15);">
             <div class="sidebar-header mb-4 px-3">
                 <div style="font-size: 1.2rem; font-weight: 800; color: white; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
                     <i class="fas fa-university me-2" style="color: #B8860B;"></i>Admin Panel
@@ -353,5 +361,16 @@ if ($action === 'list') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function(){
+        var toggle  = document.getElementById('sidebarToggle');
+        var sidebar = document.getElementById('adminSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        function openSidebar()  { sidebar.classList.add('sidebar-open');    overlay.classList.add('active'); }
+        function closeSidebar() { sidebar.classList.remove('sidebar-open'); overlay.classList.remove('active'); }
+        if (toggle)  toggle.addEventListener('click', function(){ sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar(); });
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+    })();
+    </script>
 </body>
 </html>

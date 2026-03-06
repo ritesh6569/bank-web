@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
 <!-- Page Header -->
 <section style="background: linear-gradient(135deg, #1e3a8a 0%, #2d5a8c 100%); color: white; padding: 60px 0;">
     <div class="container">
-        <h1 class="mb-2">Contact Us</h1>
+        <h1 class="mb-2" style="color: rgba(255, 255, 255, 0.9);">Contact Us</h1>
         <p style="color: rgba(255, 255, 255, 0.9);">We're here to help. Reach out to us anytime</p>
     </div>
 </section>
@@ -144,7 +144,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
                         <h5 class="card-title">Call Us</h5>
                         <p class="text-muted mb-1">Mon–Fri: 10 AM – 4 PM</p>
                         <a href="tel:+918338273169" class="btn btn-sm btn-primary mb-1">+91 8338273169</a><br>
-                        <a href="tel:+918494903886" class="btn btn-sm btn-outline-primary mt-1">+91 8494903886</a>
                     </div>
                 </div>
             </div>
@@ -173,14 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
         </div>
 
         <!-- Contact Form & Map -->
-        <div class="row mb-5">
+        <div class="row mb-5 align-items-stretch">
             <!-- Contact Form -->
-            <div class="col-lg-6 mb-4 animate-on-scroll">
-                <div class="card">
+            <div class="col-lg-6 mb-4 animate-on-scroll d-flex flex-column">
+                <div class="card h-100">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">Send us a Message</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <?php if (!empty($form_message)): ?>
                             <div class="alert alert-<?php echo $form_message_type; ?> alert-dismissible fade show" role="alert">
                                 <?php echo $form_message; ?>
@@ -188,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="">
+                        <form method="POST" action="" class="d-flex flex-column flex-grow-1">
                             <input type="hidden" name="contact_form" value="1">
                             
                             <div class="mb-3">
@@ -202,8 +201,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="(Optional)">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
 
                             <div class="mb-3">
@@ -211,12 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
                                 <input type="text" class="form-control" id="subject" name="subject" required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 flex-grow-1 d-flex flex-column">
                                 <label for="message" class="form-label">Message *</label>
-                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                                <textarea class="form-control flex-grow-1" id="message" name="message" rows="4" required></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button type="submit" class="btn btn-primary w-100 mt-auto">
                                 <i class="fas fa-paper-plane me-2"></i>Send Message
                             </button>
                         </form>
@@ -225,9 +224,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
             </div>
 
             <!-- Map/Info -->
-            <div class="col-lg-6 mb-4 animate-on-scroll">
+            <div class="col-lg-6 mb-4 animate-on-scroll d-flex flex-column">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title mb-4">Location & Hours</h5>
                         
                         <div class="mb-4">
@@ -256,8 +255,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
                         </div>
 
                         <!-- Embed Map -->
-                        <div style="border-radius: 0.5rem; overflow: hidden; margin-top: 2rem;">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.0!2d74.5879!3d16.4333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc5af00000000000%3A0x0!2sChikodi%2C%20Karnataka%20591201!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div style="border-radius: 0.5rem; overflow: hidden; margin-top: auto; flex-grow: 1; min-height: 200px;">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.0!2d74.5879!3d16.4333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc5af00000000000%3A0x0!2sChikodi%2C%20Karnataka%20591201!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="100%" style="border:0; display:block; min-height:200px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>

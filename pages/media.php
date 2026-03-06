@@ -399,7 +399,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2024-25</h6>
                                         <p class="small text-muted">Financial Year 2024-2025</p>
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -409,7 +409,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2023-24</h6>
                                         <p class="small text-muted">Financial Year 2023-2024</p>
-                                        <a href="#" class="btn btn-sm btn-outline-primary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -419,7 +419,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2022-23</h6>
                                         <p class="small text-muted">Financial Year 2022-2023</p>
-                                        <a href="#" class="btn btn-sm btn-outline-primary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -429,7 +429,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2021-22</h6>
                                         <p class="small text-muted">Financial Year 2021-2022</p>
-                                        <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +439,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2020-21</h6>
                                         <p class="small text-muted">Financial Year 2020-2021</p>
-                                        <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -449,7 +449,7 @@ try {
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
                                         <h6>Annual Report 2019-20</h6>
                                         <p class="small text-muted">Financial Year 2019-2020</p>
-                                        <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fas fa-download me-1"></i>Download</a>
+                                        <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-clock me-1"></i>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -478,7 +478,10 @@ try {
                                                 <?php if (!empty($dl['description'])): ?>
                                                 <p class="small text-muted mb-2"><?php echo htmlspecialchars($dl['description']); ?></p>
                                                 <?php endif; ?>
-                                                <a href="<?php echo SITE_URL; ?>uploads/downloads/<?php echo basename($dl['file_path']); ?>" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-download me-1"></i>Download</a>
+                                                <a href="<?php echo rtrim(SITE_URL, '/'); ?>/<?php echo ltrim($dl['file_path'], '/'); ?>" 
+                                                   class="btn btn-sm btn-primary" 
+                                                   target="_blank" 
+                                                   download><i class="fas fa-download me-1"></i>Download</a>
                                             </div>
                                         </div>
                                     </div>
@@ -539,19 +542,4 @@ try {
 
         </div><!-- end tab-content -->
     </div>
-
-    <!-- CTA -->
-    <section class="section" style="background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);color:white;">
-        <div class="container-lg text-center">
-            <h2 class="mb-3">Have Questions?</h2>
-            <p class="lead mb-4">Our team is ready to help you with any queries about our rates, charges, or services.</p>
-            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-light btn-lg me-3">
-                <i class="fas fa-phone me-2"></i>Contact Us
-            </a>
-            <a href="<?php echo SITE_URL; ?>pages/services.php" class="btn btn-outline-light btn-lg">
-                <i class="fas fa-concierge-bell me-2"></i>Our Services
-            </a>
-        </div>
-    </section>
-
 <?php include __DIR__ . '/../includes/footer.php'; ?>

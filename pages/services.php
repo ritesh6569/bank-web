@@ -322,19 +322,4 @@ $notices = getActiveNotices();
             </div>
         </div>
     </section>
-
-    <!-- CTA -->
-    <section class="section" style="background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);color:white;">
-        <div class="container-lg text-center">
-            <h2 class="mb-3">Need Any of Our Services?</h2>
-            <p class="lead mb-4">Visit your nearest branch or contact us for assistance with any of our banking services.</p>
-            <a href="<?php echo SITE_URL; ?>pages/contact.php" class="btn btn-light btn-lg me-3">
-                <i class="fas fa-map-marker-alt me-2"></i>Find a Branch
-            </a>
-            <a href="<?php echo SITE_URL; ?>pages/media.php" class="btn btn-outline-light btn-lg">
-                <i class="fas fa-file-invoice-dollar me-2"></i>View Service Charges
-            </a>
-        </div>
-    </section>
-
 <?php include __DIR__ . '/../includes/footer.php'; ?>

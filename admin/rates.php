@@ -105,11 +105,69 @@ $categories = array_unique(array_column($loan_rates, 'category'));
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/professional-theme.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/admin-responsive.css">
+    <style>
+        /* ── Card header: wrap on small screens ── */
+        .card-header.d-flex {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* ── Hide low-priority table columns on mobile ── */
+        @media (max-width: 640px) {
+            /* Loan table: hide #, Order columns */
+            .loan-table th:nth-child(1),
+            .loan-table td:nth-child(1),
+            .loan-table th:nth-child(5),
+            .loan-table td:nth-child(5) { display: none; }
+
+            /* Deposit table: hide #, Order columns */
+            .deposit-table th:nth-child(1),
+            .deposit-table td:nth-child(1),
+            .deposit-table th:nth-child(6),
+            .deposit-table td:nth-child(6) { display: none; }
+
+            /* Make category badge wrap */
+            .loan-table td:nth-child(2) span.badge {
+                white-space: normal;
+                text-align: left;
+            }
+
+            /* Tighten action buttons */
+            .btn-sm { padding: 0.25rem 0.45rem; font-size: 0.75rem; }
+
+            /* Form: stack all col-md-* fields to full width */
+            .col-md-1, .col-md-2, .col-md-3, .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            /* Page title area */
+            .d-flex.justify-content-between h1 { font-size: 1.25rem; }
+        }
+
+        /* ── Tablet: partial hide ── */
+        @media (min-width: 641px) and (max-width: 900px) {
+            /* Loan: hide Order */
+            .loan-table th:nth-child(5),
+            .loan-table td:nth-child(5) { display: none; }
+            /* Deposit: hide Order */
+            .deposit-table th:nth-child(6),
+            .deposit-table td:nth-child(6) { display: none; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Hamburger Toggle (mobile) -->
+    <button class="hamburger-btn" id="sidebarToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Overlay backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <div class="d-flex" style="min-height:100vh;">
     <!-- Sidebar -->
-    <nav class="sidebar" style="width:250px;background:#1A2533;padding:2rem 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:4px 0 12px rgba(15,31,53,.15);">
+    <nav class="sidebar" id="adminSidebar" style="width:250px;background:#1A2533;padding:2rem 0;position:fixed;height:100vh;overflow-y:auto;box-shadow:4px 0 12px rgba(15,31,53,.15);">
         <div class="sidebar-header mb-4 px-3">
             <div style="font-size:1.2rem;font-weight:800;color:white;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,.1);">
                 <i class="fas fa-university me-2" style="color:#B8860B;"></i>Admin Panel
@@ -178,7 +236,7 @@ $categories = array_unique(array_column($loan_rates, 'category'));
                     <form method="POST" action="rates.php?action=<?php echo $action; ?>&tab=loan<?php echo $action === 'edit' ? '&id='.$edit_id : ''; ?>">
                         <input type="hidden" name="tab" value="loan">
                         <div class="row g-3">
-                            <div class="col-md-4">
+                            <div class="col-12 col-md-4">
                                 <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
                                 <input type="text" name="category" class="form-control" list="cat-list"
                                     value="<?php echo htmlspecialchars($edit_loan['category'] ?? ''); ?>"
@@ -190,24 +248,24 @@ $categories = array_unique(array_column($loan_rates, 'category'));
                                 </datalist>
                                 <small class="text-muted">Group header for the table</small>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-12 col-md-4">
                                 <label class="form-label fw-semibold">Loan Type <span class="text-danger">*</span></label>
                                 <input type="text" name="loan_type" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_loan['loan_type'] ?? ''); ?>"
                                     placeholder="e.g. Working Capital" required>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-6 col-md-2">
                                 <label class="form-label fw-semibold">Interest Rate <span class="text-danger">*</span></label>
                                 <input type="text" name="interest_rate" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_loan['interest_rate'] ?? ''); ?>"
                                     placeholder="e.g. 10.00%" required>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-3 col-md-1">
                                 <label class="form-label fw-semibold">Order</label>
                                 <input type="number" name="display_order" class="form-control"
                                     value="<?php echo intval($edit_loan['display_order'] ?? 0); ?>">
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-3 col-md-1">
                                 <label class="form-label fw-semibold">Status</label>
                                 <select name="status" class="form-select">
                                     <option value="active"   <?php echo ($edit_loan['status'] ?? 'active') === 'active'   ? 'selected' : ''; ?>>Active</option>
@@ -236,8 +294,7 @@ $categories = array_unique(array_column($loan_rates, 'category'));
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered mb-0">
-                            <thead class="table-primary">
+                        <table class="table table-hover table-bordered mb-0 loan-table">
                                 <tr>
                                     <th style="width:40px;">#</th>
                                     <th>Category</th>
@@ -298,36 +355,36 @@ $categories = array_unique(array_column($loan_rates, 'category'));
                     <form method="POST" action="rates.php?action=<?php echo $action; ?>&tab=deposit<?php echo $action === 'edit' ? '&id='.$edit_id : ''; ?>">
                         <input type="hidden" name="tab" value="deposit">
                         <div class="row g-3">
-                            <div class="col-md-3">
+                            <div class="col-12 col-md-3">
                                 <label class="form-label fw-semibold">Deposit Type <span class="text-danger">*</span></label>
                                 <input type="text" name="deposit_type" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_deposit['deposit_type'] ?? ''); ?>"
                                     placeholder="e.g. Term Deposit" required>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-12 col-md-3">
                                 <label class="form-label fw-semibold">Period <span class="text-danger">*</span></label>
                                 <input type="text" name="period" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_deposit['period'] ?? ''); ?>"
                                     placeholder="e.g. 46 Days to 90 Days" required>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-6 col-md-2">
                                 <label class="form-label fw-semibold">General Rate <span class="text-danger">*</span></label>
                                 <input type="text" name="general_rate" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_deposit['general_rate'] ?? ''); ?>"
                                     placeholder="e.g. 5.00%" required>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-6 col-md-2">
                                 <label class="form-label fw-semibold">Senior Citizen Rate</label>
                                 <input type="text" name="senior_rate" class="form-control"
                                     value="<?php echo htmlspecialchars($edit_deposit['senior_rate'] ?? ''); ?>"
                                     placeholder="e.g. 5.50%">
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-6 col-md-1">
                                 <label class="form-label fw-semibold">Order</label>
                                 <input type="number" name="display_order" class="form-control"
                                     value="<?php echo intval($edit_deposit['display_order'] ?? 0); ?>">
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-6 col-md-1">
                                 <label class="form-label fw-semibold">Status</label>
                                 <select name="status" class="form-select">
                                     <option value="active"   <?php echo ($edit_deposit['status'] ?? 'active') === 'active'   ? 'selected' : ''; ?>>Active</option>
@@ -356,8 +413,7 @@ $categories = array_unique(array_column($loan_rates, 'category'));
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered mb-0">
-                            <thead class="table-success">
+                        <table class="table table-hover table-bordered mb-0 deposit-table">
                                 <tr>
                                     <th>#</th>
                                     <th>Deposit Type</th>
@@ -410,5 +466,16 @@ $categories = array_unique(array_column($loan_rates, 'category'));
     </main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){
+    var toggle  = document.getElementById('sidebarToggle');
+    var sidebar = document.getElementById('adminSidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    function openSidebar()  { sidebar.classList.add('sidebar-open');    overlay.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('sidebar-open'); overlay.classList.remove('active'); }
+    if (toggle)  toggle.addEventListener('click', function(){ sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar(); });
+    if (overlay) overlay.addEventListener('click', closeSidebar);
+})();
+</script>
 </body>
 </html>
